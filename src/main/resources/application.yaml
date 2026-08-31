@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: user-serivce
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ten_database_cua_ban
+    username : root
+    password : root
+    driver-class-name: com.mysql.jdbc.Driver
+
