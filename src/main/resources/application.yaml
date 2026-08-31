@@ -3,8 +3,21 @@ spring:
     name: user-serivce
 
   datasource:
-    url: jdbc:mysql://localhost:3306/ten_database_cua_ban
+    url: jdbc:mysql://localhost:3306/user_service?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username : root
-    password : root
-    driver-class-name: com.mysql.jdbc.Driver
+    password : 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  signer-key: "user-service-pet-project-hs256-secret-key-32b"
+  access-duration: 1800
+  refresh-duration: 604800
+
 
