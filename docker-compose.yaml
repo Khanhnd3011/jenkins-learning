@@ -1,0 +1,36 @@
+services:
+
+   backend:
+     build:
+       context: .
+       dockerfile: Dockerfile
+
+     ports:
+      - "8080:8080"
+
+
+     environment:
+       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/user_service
+       SPRING_DATASOURCE_USERNAME: appuser
+       SPRING_DATASOURCE_PASSWORD: app123
+
+     depends_on:
+       - mysql
+
+
+
+   mysql:
+     image: mysql:oracle
+
+     environment:
+       MYSQL_ROOT_PASSWORD: root123
+       MYSQL_DATABASE: user_service
+       MYSQL_USER: appuser
+       MYSQL_PASSWORD: app123
+
+
+     volumes:
+       - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
