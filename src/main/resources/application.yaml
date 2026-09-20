@@ -3,12 +3,17 @@ spring:
     name: user-serivce
 
   datasource:
-    url: jdbc:mysql://mysql:3306/user_service?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username : root
-    password : 123456
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/${MYSQL_DATABASE:user_service}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER:appuser}
+    password: ${MYSQL_PASSWORD:app123}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      connect-timeout: 2s
+      timeout: 2s
 
   jpa:
     hibernate:
@@ -19,5 +24,3 @@ jwt:
   signer-key: "user-service-pet-project-hs256-secret-key-32b"
   access-duration: 1800
   refresh-duration: 604800
-
-
