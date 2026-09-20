@@ -49,6 +49,11 @@ pipeline{
                 '''
             }
         }
+        stage('Pipeline Version'){
+            steps{
+                echo 'Pipeline version 2'
+            }
+        }
     }
 
 
