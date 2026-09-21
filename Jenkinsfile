@@ -1,98 +1,48 @@
 pipeline{
-
-    agent any
+    agent any 
 
     stages{
-
+        
         stage('Environment'){
+
             steps{
-
                 sh '''
-
-                echo "====== USER ====="
-                whoami
-
-                echo "====== WORKSPACE ====="
-                pwd
-
-                echo "====== JAVA ====="
                 java -version
-
-                echo "======= MAVEN ====="
                 ./mvnw -version
 
                 '''
             }
         }
 
-        stage('Clean'){
+        stage('Build and Test'){
 
             steps{
 
-                echo 'Cleaning previous build output...'
-                sh './mvnw -B clean'
+              sh './mvnw -B clean verify'
 
             }
         }
 
-        stage('Compile'){
 
+        stage('Artifact'){
 
             steps{
 
-                echo 'Compiling application ...'
-                sh './mvnw -B compile'
+               sh 'ls -lah target/*.jar'
 
             }
         }
 
-        stage('Test'){
-
-            steps{
-
-                echo 'Running tests ...'
-                sh './mvnw -B test'
-
-            }
-        }
-
-        stage('Package'){
-
-
-
-            steps{
-
-                echo 'Packagin Spring Boot applicaton ...'
-                sh './mvnw -B package -DskipTests'
-
-            }
-        }
-
-        stage('Verity Artifact'){
-
-            steps{
-
-                sh '''
-
-                echo " ===== TARGET DIRECTORY ======"
-                ls -lah target
-
-                echo "====== JAR FILES ===="
-                ls -lah target/*.jar
-
-                '''
-            }
-        }
     }
 
-    post{
 
+    post{
         success{
-            echo "Build #${BUILD_NUMBER} succeeded."
+            echo "building #${BUILD_NUMBER} successfully"
         }
-        
+
         failure{
-            echo "Build #${BUILD_NUMBER} failed. "
+            echo "building #${BUILD_NUMBER} failed."
         }
     }
 }
