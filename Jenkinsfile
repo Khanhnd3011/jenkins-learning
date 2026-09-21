@@ -51,7 +51,7 @@ pipeline{
         }
         stage('Build'){
             steps{
-                echo 'Automatically building commit ${GIT_COMMIT}'
+                echo "Automatically building commit ${GIT_COMMIT}"
             }
         }
     }
