@@ -49,9 +49,9 @@ pipeline{
                 '''
             }
         }
-        stage('Pipeline Version'){
+        stage('Build'){
             steps{
-                echo 'Pipeline version 2'
+                echo 'Automatically building commit ${GIT_COMMIT}'
             }
         }
     }
