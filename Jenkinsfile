@@ -1,69 +1,76 @@
 pipeline{
+
     agent any
 
     stages{
-        stage('Source Info'){
+        stage('Environment'){
             steps{
-                echo 'Repository successfully loaded by jenkins'
                 sh '''
-                  echo "Current User:"
-                  whoami
+                echo "====== USER ====="
+                whoamin
 
-                  echo "Workspace:"
-                  pwd
+                echo "====== WORKSPACE ====="
+                pwd
 
-                  echo "Repository file:"
-                  ls -la
+                echo "====== JAVA ====="
+                java -version
 
+                echo "======= MAVEN ====="
+                ./mvnw -version
 
                 '''
             }
         }
 
-
-        stage('Git info'){
+        stage('Clean'){
             steps{
-                sh '''
-                echo "Git branch:"
-                git branch --show-current
-
-                echo "Commit:"
-                git rev-parse --short HEAD
-
-                echo "Commit message:"
-                git log -1 --pretty=%B
-
-                '''
+                echo 'Cleaning previous build output...'
+                sh './mvnw -B clean'
             }
         }
-        
-        stage('Verify Project'){
+
+        stage('Compile'){
             steps{
-                sh '''
-                echo "Checking spring boot project..."
-
-                test -f pom.xml
-                
-                echo "pom.xml exists"
-
-                '''
+                echo 'Compiling application ...'
+                sh './mvnw -B compile'
             }
         }
-        stage('Build'){
+
+        stage('Test'){
             steps{
-                echo "Automatically building commit ${GIT_COMMIT}"
+                echo 'Running tests ...'
+                sh './mvnw -B test'
+            }
+        }
+
+        stage('Package'){
+            steps{
+                echo 'Packagin Spring Boot applicaton ...'
+                sh './mvnw -B package -DskipTests'
+            }
+        }
+
+        stage('Verity Artifact'){
+            steps{
+                sh '''
+                echo " ===== TARGET DIRECTORY ======"
+                ls -lah target
+
+                echo "====== JAR FILES ===="
+                ls -lah target/*.jar
+
+                '''
             }
         }
     }
-
 
     post{
         success{
             echo "Build #${BUILD_NUMBER} succeeded."
         }
-
+        
         failure{
-            echo "Build #${BUILD_NUMBER} failed."
+            echo "Build #${BUILD_NUMBER} failed. "
         }
     }
 }
