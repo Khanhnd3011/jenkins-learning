@@ -3,9 +3,12 @@ pipeline{
     agent any
 
     stages{
+
         stage('Environment'){
             steps{
+
                 sh '''
+
                 echo "====== USER ====="
                 whoamin
 
@@ -23,36 +26,54 @@ pipeline{
         }
 
         stage('Clean'){
+
             steps{
+
                 echo 'Cleaning previous build output...'
                 sh './mvnw -B clean'
+
             }
         }
 
         stage('Compile'){
+
+
             steps{
+
                 echo 'Compiling application ...'
                 sh './mvnw -B compile'
+
             }
         }
 
         stage('Test'){
+
             steps{
+
                 echo 'Running tests ...'
                 sh './mvnw -B test'
+
             }
         }
 
         stage('Package'){
+
+
+
             steps{
+
                 echo 'Packagin Spring Boot applicaton ...'
                 sh './mvnw -B package -DskipTests'
+
             }
         }
 
         stage('Verity Artifact'){
+
             steps{
+
                 sh '''
+
                 echo " ===== TARGET DIRECTORY ======"
                 ls -lah target
 
@@ -65,6 +86,7 @@ pipeline{
     }
 
     post{
+        
         success{
             echo "Build #${BUILD_NUMBER} succeeded."
         }
