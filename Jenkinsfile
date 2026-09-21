@@ -10,7 +10,7 @@ pipeline{
                 sh '''
 
                 echo "====== USER ====="
-                whoamin
+                whoami
 
                 echo "====== WORKSPACE ====="
                 pwd
@@ -86,7 +86,7 @@ pipeline{
     }
 
     post{
-        
+
         success{
             echo "Build #${BUILD_NUMBER} succeeded."
         }
