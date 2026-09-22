@@ -37,7 +37,14 @@ pipeline{
 
 
     post{
+        always{
+               junit testResult: 'target/surefire-reports/*.xml',
+                      allowEmptyResults: true
+        }
+
         success{
+            archiveArtifacts artifacts: 'target/*.jar'
+                             fingerprint: true
             echo "building #${BUILD_NUMBER} successfully"
         }
 
