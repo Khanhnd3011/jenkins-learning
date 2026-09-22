@@ -43,7 +43,7 @@ pipeline{
         }
 
         success{
-            archiveArtifacts artifacts: 'target/*.jar'
+            archiveArtifacts artifacts: 'target/*.jar',
                              fingerprint: true
             echo "building #${BUILD_NUMBER} successfully"
         }
