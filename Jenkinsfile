@@ -35,16 +35,26 @@ pipeline{
         }
 
 
-        stage('Artifact'){
+       stage('Credential Test') {
 
-            steps{
+    steps {
 
-               sh 'ls -lah target/*.jar'
+        withCredentials([
+            string(
+                credentialsId: 'practice-api-token',
+                variable: 'API_TOKEN'
+            )
+        ]) {
 
-            }
+            sh '''
+                test -n "$API_TOKEN"
+                echo "Credential is available"
+            '''
+
         }
 
     }
+}
 
 
     post{
