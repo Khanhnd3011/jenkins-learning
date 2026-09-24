@@ -4,9 +4,9 @@ pipeline{
     options{
         buildDiscarder(
             logRotator(
-                numToKeepStr: '10', // Keep only the 10 most recnet builds
+                numToKeepStr: '10', // Keep only the 10 most recent builds
                 daysToKeepStr: '30', // Discard builds older than 30 days
-                artifactsNumToKeepStr: '5' // Keep artifacts for only the last 5 builds
+                artifactsNumToKeepStr: '5' ,// Keep artifacts for only the last 5 builds
                 artifactsDaysToKeepStr: '7' // Discard artifacts older than 7 days
             )
         )
