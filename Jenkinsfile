@@ -35,26 +35,27 @@ pipeline{
         }
 
 
-       stage('Credential Test') {
+    stage('Credential Test') {
 
-    steps {
+        steps {
 
-        withCredentials([
-            string(
-                credentialsId: 'practice-api-token',
-                variable: 'API_TOKEN'
-            )
-        ]) {
+            withCredentials([
+                string(
+                    credentialsId: 'practice-api-token',
+                    variable: 'API_TOKEN'
+                )
+            ]) {
 
-            sh '''
-                test -n "$API_TOKEN"
-                echo "Credential is available"
-            '''
+                sh '''
+                    test -n "$API_TOKEN"
+                    echo "Credential is available"
+                '''
+
+            }
 
         }
-
     }
-}
+
 
 
     post{
