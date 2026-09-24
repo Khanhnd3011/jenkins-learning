@@ -40,23 +40,25 @@ pipeline{
             steps {
 
                 withCredentials([
-                    string(
-                        credentialsId: 'practice-api-token',
-                        variable: 'API_TOKEN'
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_TOKEN'
                     )
                 ]) {
 
                     sh '''
-                        test -n "$API_TOKEN"
-                        echo "Credential is available"
+                        echo "Using Docker account: $DOCKER_USER"
+
+                        test -n "$DOCKER_TOKEN"
                     '''
 
                 }
 
             }
         }
-    }
 
+    }
 
     post{
         always{
